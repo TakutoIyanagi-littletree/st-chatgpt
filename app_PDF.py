@@ -29,20 +29,6 @@ faiss_db = FAISS.load_local("faiss_index/", embeddings=OpenAIEmbeddings(client=o
 qa = RetrievalQA.from_chain_type(llm=model, chain_type="stuff", retriever=faiss_db.as_retriever())
 query = f"あなたはHakkyについての質問に答えるChatBotです。次の質問に答えてください。:{user_msg}"
 
-
-def response_chatgpt(
-    user_msg: str,
-):
-    """ChatGPTのレスポンスを取得
-
-    Args:
-        user_msg (str): ユーザーメッセージ。
-    """
-   
-    response = qa.run(query)
-    return response
-
-
 # チャットログを保存したセッション情報を初期化
 if "chat_log" not in st.session_state:
     st.session_state.chat_log = []
@@ -58,7 +44,7 @@ if user_msg:
         st.write(user_msg)
   
     # アシスタントのメッセージを表示
-    response = response_chatgpt(user_msg)
+    response = qa.run(query)
     with st.chat_message(ASSISTANT_NAME):
         assistant_msg = ""
         assistant_response_area = st.empty()
