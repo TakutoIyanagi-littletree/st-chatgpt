@@ -32,7 +32,7 @@ vectoreStore = FAISS.load_local("faiss_index/", OpenAIEmbeddings())
 retriever = vectoreStore.as_retriever(search_type="similarity", search_kwargs={"k":3})
 
 ### プロンプト(Q&A)
-qa = RetrievalQA.from_chain_type(llm=ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo-16k"), chain_type="stuff", retriever=retriever, return_source_documents=False)
+qa = RetrievalQA.from_chain_type(llm=ChatOpenAI(temperature=0.3, model_name="gpt-3.5-turbo-16k"), chain_type="stuff", retriever=retriever, return_source_documents=False)
 query = f"あなたは東海大学情報理工学部についての質問に答えるChatBotです。次の質問に答えてください。:{user_msg}"
 
 # チャットログを保存したセッション情報を初期化
