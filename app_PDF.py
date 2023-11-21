@@ -38,7 +38,6 @@ qa = RetrievalQA.from_chain_type(
     model_name="gpt-3.5-turbo-16k", 
     streaming=True,
   ), 
-  messages=[{"role": "user", "content": user_msg},],
   chain_type="stuff", 
   retriever=retriever, 
   return_source_documents=False
@@ -66,7 +65,7 @@ if user_msg:
         assistant_response_area = st.empty()
         for chunk in response:
             # 回答を逐次表示
-            tmp_assistant_msg = chunk["choices"][0]["delta"].get("content", "")
+            tmp_assistant_msg = chunk["choices"][0]["delta"].get("user_msg", "")
             assistant_msg += tmp_assistant_msg
             assistant_response_area.write(assistant_msg)
 
