@@ -12,6 +12,7 @@ load_dotenv()
 
 # APIキーの設定
 openai.api_key = os.environ["OPENAI_API_KEY"]
+FAISS_DB_DIR = os.environ["FAISS_DB_DIR"]
 
 st.title("StreamlitのChatGPTサンプル")
 
@@ -20,6 +21,13 @@ USER_NAME = "user"
 ASSISTANT_NAME = "assistant"
 
 user_msg = st.chat_input("ここにメッセージを入力")
+
+model = ChatOpenAI(model="gpt-3.5-turbo-16k-0613", temperature=0.9, client=openai.ChatCompletion)
+faiss_db = FAISS.load_local(FAISS_DB_DIR, embeddings=OpenAIEmbeddings(client=openai.ChatCompletion))
+
+# LLMによる回答の生成
+qa = RetrievalQA.from_chain_type(llm=model, chain_type="stuff", retriever=faiss_db.as_retriever())
+query = f"あなたはHakkyについての質問に答えるChatBotです。次の質問に答えてください。:{prompt}"
 
 
 def response_chatgpt(
@@ -31,21 +39,13 @@ def response_chatgpt(
         user_msg (str): ユーザーメッセージ。
     """
    
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "user", "content": user_msg},
-        ],
-        stream=True,
-    )
+    response = qa.run(query)
     return response
 
 
 # チャットログを保存したセッション情報を初期化
 if "chat_log" not in st.session_state:
     st.session_state.chat_log = []
-
-
 
 if user_msg:
     # 以前のチャットログを表示
