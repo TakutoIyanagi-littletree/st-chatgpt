@@ -69,6 +69,7 @@ socksio==1.0.0
 soupsieve==2.5
 SQLAlchemy==2.0.22
 streamlit==1.28.0
+tiktoken
 tenacity==8.2.3
 toml==0.10.2
 toolz==0.12.0
