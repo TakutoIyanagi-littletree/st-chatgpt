@@ -46,7 +46,7 @@ if user_msg:
     # アシスタントのメッセージを表示
     response = qa.run(query)
     with st.chat_message(ASSISTANT_NAME):
-        st.write(user_msg)
+        st.write(response)
         '''assistant_msg = ""
         assistant_response_area = st.empty()
         for chunk in response:
@@ -57,4 +57,4 @@ if user_msg:
 
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
-    st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": assistant_msg})
+    st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
