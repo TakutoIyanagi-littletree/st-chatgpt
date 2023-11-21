@@ -71,4 +71,4 @@ if user_msg:
 
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
-    st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
+    st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": assistant_msg})
