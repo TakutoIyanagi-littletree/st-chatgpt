@@ -12,7 +12,7 @@ load_dotenv()
 
 # APIキーの設定
 openai.api_key = os.environ["OPENAI_API_KEY"]
-FAISS_DB_DIR = os.environ["FAISS_DB_DIR"]
+#FAISS_DB_DIR = os.environ["FAISS_DB_DIR"]
 
 st.title("StreamlitのChatGPTサンプル")
 
