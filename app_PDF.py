@@ -7,6 +7,8 @@ from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
+from langchain.prompts import PromptTemplate
+
 
 load_dotenv()
 
@@ -24,11 +26,13 @@ ASSISTANT_NAME = "assistant"
 
 user_msg = st.chat_input("ここにメッセージを入力")
 
-model = ChatOpenAI(model="gpt-3.5-turbo-16k-0613", temperature=0.9, client=openai.ChatCompletion)
-faiss_db = FAISS.load_local("faiss_index/", embeddings=OpenAIEmbeddings(client=openai.ChatCompletion))
+### FAISS vectorのロード
+vectoreStore = FAISS.load_local("faiss_index/", OpenAIEmbeddings())
+## Retriever
+retriever = vectoreStore.as_retriever(search_type="similarity", search_kwargs={"k":3})
 
-# LLMによる回答の生成
-qa = RetrievalQA.from_chain_type(llm=model, chain_type="stuff", retriever=faiss_db.as_retriever())
+### プロンプト(Q&A)
+qa = RetrievalQA.from_chain_type(llm=ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo"), chain_type="stuff", retriever=retriever, return_source_documents=False)
 query = f"あなたは東海大学についての質問に答えるChatBotです。次の質問に答えてください。:{user_msg}"
 
 # チャットログを保存したセッション情報を初期化
