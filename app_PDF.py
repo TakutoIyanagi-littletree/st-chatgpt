@@ -32,7 +32,16 @@ vectoreStore = FAISS.load_local("faiss_index/", OpenAIEmbeddings())
 retriever = vectoreStore.as_retriever(search_type="similarity", search_kwargs={"k":3})
 
 ### プロンプト(Q&A)
-qa = RetrievalQA.from_chain_type(llm=ChatOpenAI(temperature=0.9, model_name="gpt-3.5-turbo-16k"), chain_type="stuff", retriever=retriever, return_source_documents=False)
+qa = RetrievalQA.from_chain_type(
+  llm=ChatOpenAI(
+    temperature=0.9, 
+    model_name="gpt-3.5-turbo-16k", 
+    streaming=True,
+  ), 
+  chain_type="stuff", 
+  retriever=retriever, 
+  return_source_documents=False
+)
 query = f"あなたは東海大学情報理工学部についての質問に答えるChatBotです。次の質問に答えてください。:{user_msg}"
 
 # チャットログを保存したセッション情報を初期化
@@ -52,7 +61,13 @@ if user_msg:
     # アシスタントのメッセージを表示
     response = qa.run(query)
     with st.chat_message(ASSISTANT_NAME):
-        st.write(response)
+         assistant_msg = ""
+        assistant_response_area = st.empty()
+        for chunk in response:
+            # 回答を逐次表示
+            tmp_assistant_msg = chunk["choices"][0]["delta"].get("content", "")
+            assistant_msg += tmp_assistant_msg
+            assistant_response_area.write(assistant_msg)
 
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
