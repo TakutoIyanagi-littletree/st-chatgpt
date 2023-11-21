@@ -46,13 +46,14 @@ if user_msg:
     # アシスタントのメッセージを表示
     response = qa.run(query)
     with st.chat_message(ASSISTANT_NAME):
-        assistant_msg = ""
+        st.write(user_msg)
+        '''assistant_msg = ""
         assistant_response_area = st.empty()
         for chunk in response:
             # 回答を逐次表示
             tmp_assistant_msg = chunk["choices"][0]["delta"].get("content", "")
             assistant_msg += tmp_assistant_msg
-            assistant_response_area.write(assistant_msg)
+            assistant_response_area.write(assistant_msg)'''
 
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
