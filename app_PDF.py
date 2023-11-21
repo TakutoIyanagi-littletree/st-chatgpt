@@ -14,9 +14,9 @@ load_dotenv()
 openai.api_key = os.environ["OPENAI_API_KEY"]
 #FAISS_DB_DIR = os.environ["FAISS_DB_DIR"]
 
-st.set_page_config(page_title="TokAI 1.0",
+st.set_page_config(page_title="TokAI 2.0",
                        page_icon="🤖")
-st.title("TokAI2.0")
+st.title("TokAI2.0 🤖")
 
 # 定数定義
 USER_NAME = "user"
