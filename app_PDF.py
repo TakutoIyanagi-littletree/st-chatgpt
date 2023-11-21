@@ -27,7 +27,7 @@ faiss_db = FAISS.load_local("faiss_index/", embeddings=OpenAIEmbeddings(client=o
 
 # LLMによる回答の生成
 qa = RetrievalQA.from_chain_type(llm=model, chain_type="stuff", retriever=faiss_db.as_retriever())
-query = f"あなたはHakkyについての質問に答えるChatBotです。次の質問に答えてください。:{prompt}"
+query = f"あなたはHakkyについての質問に答えるChatBotです。次の質問に答えてください。:{user_msg}"
 
 
 def response_chatgpt(
