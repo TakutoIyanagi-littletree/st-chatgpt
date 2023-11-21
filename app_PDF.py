@@ -23,7 +23,7 @@ ASSISTANT_NAME = "assistant"
 user_msg = st.chat_input("ここにメッセージを入力")
 
 model = ChatOpenAI(model="gpt-3.5-turbo-16k-0613", temperature=0.9, client=openai.ChatCompletion)
-faiss_db = FAISS.load_local("faiss_index\", embeddings=OpenAIEmbeddings(client=openai.ChatCompletion))
+faiss_db = FAISS.load_local("faiss_index/", embeddings=OpenAIEmbeddings(client=openai.ChatCompletion))
 
 # LLMによる回答の生成
 qa = RetrievalQA.from_chain_type(llm=model, chain_type="stuff", retriever=faiss_db.as_retriever())
