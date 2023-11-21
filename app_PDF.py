@@ -61,7 +61,7 @@ if user_msg:
     # アシスタントのメッセージを表示
     response = qa.run(query)
     with st.chat_message(ASSISTANT_NAME):
-         assistant_msg = ""
+        assistant_msg = ""
         assistant_response_area = st.empty()
         for chunk in response:
             # 回答を逐次表示
