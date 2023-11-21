@@ -14,7 +14,7 @@ load_dotenv()
 openai.api_key = os.environ["OPENAI_API_KEY"]
 #FAISS_DB_DIR = os.environ["FAISS_DB_DIR"]
 
-st.title("StreamlitのChatGPTサンプル")
+st.title("TokAI2.0")
 
 # 定数定義
 USER_NAME = "user"
@@ -27,7 +27,7 @@ faiss_db = FAISS.load_local("faiss_index/", embeddings=OpenAIEmbeddings(client=o
 
 # LLMによる回答の生成
 qa = RetrievalQA.from_chain_type(llm=model, chain_type="stuff", retriever=faiss_db.as_retriever())
-query = f"あなたはHakkyについての質問に答えるChatBotです。次の質問に答えてください。:{user_msg}"
+query = f"あなたは東海大学についての質問に答えるChatBotです。次の質問に答えてください。:{user_msg}"
 
 # チャットログを保存したセッション情報を初期化
 if "chat_log" not in st.session_state:
@@ -47,13 +47,6 @@ if user_msg:
     response = qa.run(query)
     with st.chat_message(ASSISTANT_NAME):
         st.write(response)
-        '''assistant_msg = ""
-        assistant_response_area = st.empty()
-        for chunk in response:
-            # 回答を逐次表示
-            tmp_assistant_msg = chunk["choices"][0]["delta"].get("content", "")
-            assistant_msg += tmp_assistant_msg
-            assistant_response_area.write(assistant_msg)'''
 
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
