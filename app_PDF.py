@@ -42,7 +42,7 @@ qa = RetrievalQA.from_chain_type(
   retriever=retriever, 
   return_source_documents=False
 )
-query = f"あなたは東海大学情報理工学部についての質問に答えるアシスタントです。次の質問に答えてください。:{user_msg}"
+query = user_msg
 
 # チャットログを保存したセッション情報を初期化
 if "chat_log" not in st.session_state:
