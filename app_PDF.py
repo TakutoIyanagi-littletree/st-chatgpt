@@ -59,7 +59,7 @@ if user_msg:
         st.write(user_msg)
   
     # アシスタントのメッセージを表示
-    response = qa({"query": query})
+    response = qa.run(query)
     with st.chat_message(ASSISTANT_NAME):
         st.markdown(response)
 
