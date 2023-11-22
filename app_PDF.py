@@ -40,7 +40,7 @@ qa = RetrievalQA.from_chain_type(
   ), 
   chain_type="stuff", 
   retriever=retriever, 
-  return_source_documents=False
+  return_source_documents=True
 )
 query = user_msg
 
