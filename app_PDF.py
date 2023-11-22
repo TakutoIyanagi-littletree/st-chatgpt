@@ -35,7 +35,7 @@ retriever = vectoreStore.as_retriever(search_type="similarity", search_kwargs={"
 qa = RetrievalQA.from_chain_type(
   llm=ChatOpenAI(
     temperature=0, 
-    model_name="gpt-4-1106", 
+    model_name="gpt-4-1106-preview", 
     streaming=True,
   ), 
   chain_type="stuff", 
