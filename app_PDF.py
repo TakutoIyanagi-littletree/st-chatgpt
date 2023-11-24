@@ -39,6 +39,8 @@ qa = RetrievalQA.from_chain_type(
   return_source_documents=False
 )
 query = user_msg
+file_path = qa_log.txt
+qa_log_file = qa_log.txt
 
 def write_to_log(user_msg, response, file_path):
     with open(file_path, "a") as log_file:
