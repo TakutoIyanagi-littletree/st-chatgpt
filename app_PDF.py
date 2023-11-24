@@ -56,6 +56,12 @@ if user_msg:
     # 最新のメッセージを表示
     with st.chat_message(USER_NAME):
         st.write(user_msg)
+
+    path_w = "test_w.txt"
+    s = 'New file'
+    with open(path_w, mode='w') as f:
+      f.write(s)
+
   
     # アシスタントのメッセージを表示
     response = qa.run(query)
