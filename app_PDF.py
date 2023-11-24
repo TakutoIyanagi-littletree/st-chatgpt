@@ -16,9 +16,10 @@ load_dotenv()
 openai.api_key = os.environ["OPENAI_API_KEY"]
 #FAISS_DB_DIR = os.environ["FAISS_DB_DIR"]
 
-st.set_page_config(page_title="TokAI 2.0",
-                       page_icon="🤖")
+st.set_page_config(page_title="TokAI 2.0",page_icon="🤖")
 st.title("TokAI2.0 🤖")
+
+qa_log_file="log/qa_log.txt"
 
 # 定数定義
 USER_NAME = "user"
@@ -57,12 +58,6 @@ if user_msg:
     with st.chat_message(USER_NAME):
         st.write(user_msg)
 
-    path_w = "test_w.txt"
-    s = 'New file'
-    with open(path_w, mode='w') as f:
-      f.write(s)
-
-  
     # アシスタントのメッセージを表示
     response = qa.run(query)
     with st.chat_message(ASSISTANT_NAME):
@@ -71,3 +66,5 @@ if user_msg:
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
     st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
+
+    
