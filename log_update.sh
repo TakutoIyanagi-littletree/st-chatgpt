@@ -11,6 +11,7 @@ cd $REPO_PATH
 
 # ファイルを更新（ここでは例としてファイルに日付と時刻を追加）
 echo "Updated on $(date)" >> $FILE_PATH
+echo ファイルに追記する >> file.txt
 
 # 変更をステージング
 git add $FILE_PATH
