@@ -8,9 +8,6 @@ from langchain.chains import RetrievalQA
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
-import subprocess
-
-
 
 # APIキーの設定
 openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -66,10 +63,4 @@ if user_msg:
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
     st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
-
-    # シェルスクリプトへのパス
-    shell_script_path = 'log_update.sh'
-
-    # シェルスクリプトを実行
-    subprocess.run(["bash", shell_script_path])
-    load_dotenv()
+    print("user_msg")
