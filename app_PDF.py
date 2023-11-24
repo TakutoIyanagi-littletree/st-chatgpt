@@ -68,7 +68,7 @@ if user_msg:
     st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
 
     # シェルスクリプトへのパス
-    shell_script_path = 'st-gpt/log_update.sh'
+    shell_script_path = 'log_update.sh'
 
     # シェルスクリプトを実行
     subprocess.run(["bash", shell_script_path])
