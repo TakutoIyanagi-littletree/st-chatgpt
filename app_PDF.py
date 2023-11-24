@@ -36,7 +36,6 @@ qa = RetrievalQA.from_chain_type(
   llm=ChatOpenAI(
     temperature=0, 
     model_name="gpt-3.5-turbo-16k", 
-    streaming=True,
   ), 
   chain_type="stuff", 
   retriever=retriever, 
