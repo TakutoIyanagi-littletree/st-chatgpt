@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # リポジトリへのパス。これを適切なものに変更してください。
-REPO_PATH="/path/to/your/repository"
+REPO_PATH="TakutoIyanagi-littletree/st-chatgpt"
 
 # 更新したいファイルのパス
-FILE_PATH="$REPO_PATH/yourfile.txt"
+FILE_PATH="$REPO_PATH/qa_log.txt"
 
 # Gitリポジトリに移動
 cd $REPO_PATH
