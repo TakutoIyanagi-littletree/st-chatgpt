@@ -23,3 +23,6 @@ git commit -m "Updated the file with the current date and time"
 git push origin master
 
 echo "File updated and pushed to GitHub"
+
+git config --global user.email "little.lab829@mail.com"
+git config --global user.name "TakutoIyanagi-littletree"
