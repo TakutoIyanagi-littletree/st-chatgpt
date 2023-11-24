@@ -8,6 +8,7 @@ from langchain.chains import RetrievalQA
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
+import subprocess
 
 # APIキーの設定
 openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -15,8 +16,6 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 
 st.set_page_config(page_title="TokAI 2.0",page_icon="🤖")
 st.title("TokAI2.0 🤖")
-
-qa_log_file="log/qa_log.txt"
 
 # 定数定義
 USER_NAME = "user"
@@ -41,6 +40,11 @@ qa = RetrievalQA.from_chain_type(
 )
 query = user_msg
 
+def write_to_log(user_msg, response, file_path):
+    with open(file_path, "a") as log_file:
+        log_file.write(f"User: {user_msg}\n")
+        log_file.write(f"Assistant: {response}\n\n")
+
 # チャットログを保存したセッション情報を初期化
 if "chat_log" not in st.session_state:
     st.session_state.chat_log = []
@@ -59,7 +63,14 @@ if user_msg:
     response = qa.run(query)
     with st.chat_message(ASSISTANT_NAME):
         st.markdown(response)
+        write_to_log(user_msg, response, qa_log_file)
 
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
     st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
+    
+    def git_commit_push(file_path, commit_message):
+    subprocess.run(["git", "add", file_path])
+    subprocess.run(["git", "commit", "-m", commit_message])
+    subprocess.run(["git", "push"])
+    
