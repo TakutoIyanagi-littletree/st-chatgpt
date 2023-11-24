@@ -39,8 +39,6 @@ qa = RetrievalQA.from_chain_type(
   return_source_documents=False
 )
 query = user_msg
-file_path = qa_log.txt
-qa_log_file = qa_log.txt
 
 def write_to_log(user_msg, response, file_path):
     with open(file_path, "a") as log_file:
@@ -70,9 +68,4 @@ if user_msg:
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
     st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
-    
-    def git_commit_push(file_path, commit_message):
-    subprocess.run(["git", "add", file_path])
-    subprocess.run(["git", "commit", "-m", commit_message])
-    subprocess.run(["git", "push"])
     
