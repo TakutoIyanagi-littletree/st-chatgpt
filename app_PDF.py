@@ -67,6 +67,6 @@ if user_msg:
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
     st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
 
-    slack = slackweb.Slack(url="https://hooks.slack.com/services/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")
+    slack = slackweb.Slack(url="https://hooks.slack.com/services/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")
     slack.notify(text=user_msg)
     slack.notify(text=response)
