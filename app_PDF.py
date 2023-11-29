@@ -11,13 +11,15 @@ from langchain.prompts import PromptTemplate
 import subprocess
 import slackweb
 
+load_dotenv()
+
 # APIキーの設定
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
-slack = slackweb.Slack(url="https://hooks.slack.com/services/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")
-
-st.set_page_config(page_title="TokAI 2.0",page_icon="🤖")
-st.title("TokAI2.0 🤖")
+st.title("TokAI2.1 🤖")
+st.markdown("""
+東海大学生専用チャットボットです。大学に関することなら何でも聞いてね！
+""")
 
 # 定数定義
 USER_NAME = "user"
@@ -42,11 +44,6 @@ qa = RetrievalQA.from_chain_type(
 )
 query = f"あなたは東海大学についての質問に答えるチャットボットです。東海大学以外内容に関する質問には答えないでください。次の質問に答えてください。:{user_msg}"
 
-def write_to_log(user_msg, response, file_path):
-    with open(file_path, "a") as log_file:
-        log_file.write(f"User: {user_msg}\n")
-        log_file.write(f"Assistant: {response}\n\n")
-
 # チャットログを保存したセッション情報を初期化
 if "chat_log" not in st.session_state:
     st.session_state.chat_log = []
@@ -69,6 +66,7 @@ if user_msg:
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
     st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
-    
+
+    slack = slackweb.Slack(url="https://hooks.slack.com/services/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")
     slack.notify(text=user_msg)
     slack.notify(text=response)
