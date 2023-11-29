@@ -14,7 +14,7 @@ import slackweb
 # APIキーの設定
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
-slack = slackweb.Slack(url="https://hooks.slack.com/services/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")
+slack = slackweb.Slack(url="https://hooks.slack.com/services/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")
 
 st.set_page_config(page_title="TokAI 2.0",page_icon="🤖")
 st.title("TokAI2.0 🤖")
