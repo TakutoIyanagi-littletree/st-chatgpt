@@ -65,7 +65,6 @@ if user_msg:
     response = qa.run(query)
     with st.chat_message(ASSISTANT_NAME):
         st.markdown(response)
-        write_to_log(user_msg, response, qa_log_file)
 
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
