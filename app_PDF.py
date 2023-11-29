@@ -13,7 +13,8 @@ import slackweb
 
 # APIキーの設定
 openai.api_key = os.environ["OPENAI_API_KEY"]
-#FAISS_DB_DIR = os.environ["FAISS_DB_DIR"]
+
+slack = slackweb.Slack(url="https://hooks.slack.com/services/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")
 
 st.set_page_config(page_title="TokAI 2.0",page_icon="🤖")
 st.title("TokAI2.0 🤖")
@@ -69,7 +70,6 @@ if user_msg:
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
     st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
-
-　　slack = slackweb.Slack(url="https://hooks.slack.com/services/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")
+    
     slack.notify(text=user_msg)
     slack.notify(text=response)
