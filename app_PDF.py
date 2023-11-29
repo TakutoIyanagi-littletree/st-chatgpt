@@ -9,6 +9,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
 import subprocess
+import slackweb
 
 # APIキーの設定
 openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -38,7 +39,7 @@ qa = RetrievalQA.from_chain_type(
   retriever=retriever, 
   return_source_documents=False
 )
-query = user_msg
+query = f"あなたは東海大学についての質問に答えるチャットボットです。東海大学以外内容に関する質問には答えないでください。次の質問に答えてください。:{user_msg}"
 
 def write_to_log(user_msg, response, file_path):
     with open(file_path, "a") as log_file:
@@ -68,4 +69,7 @@ if user_msg:
     # セッションにチャットログを追加
     st.session_state.chat_log.append({"name": USER_NAME, "msg": user_msg})
     st.session_state.chat_log.append({"name": ASSISTANT_NAME, "msg": response})
-    
+
+　　slack = slackweb.Slack(url="https://hooks.slack.com/services/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")
+    slack.notify(text=user_msg)
+    slack.notify(text=response)
